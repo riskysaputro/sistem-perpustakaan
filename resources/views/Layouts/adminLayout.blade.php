@@ -9,6 +9,10 @@
     @vite('resources/css/app.css')
     <link rel="shortcut icon" href="{{ asset('logo.png') }}" type="image/x-icon">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-p7Ppbq1evqfI9zUeIvS4WbU5WnHoOYWRdA8Pn5b9HZpZB6TvHcHoMaR2Fq3I9PI5ASGSm6aOpavVvzqYQpP1VA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body class="bg-gray-300 flex">

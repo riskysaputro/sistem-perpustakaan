@@ -8,4 +8,13 @@
         <a href="{{ route('denda.index') }}" class="block hover:bg-gray-700 p-2 rounded">Kelola Denda</a>
         <a href="{{ route('peminjaman.index') }}" class="block hover:bg-gray-700 p-2 rounded">Kelola Transaksi</a>
     </nav>
+    <div class="mt-20">
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="bg-red-500 hover:bg-red-800 p-1 rounded-md text-center ml-2">
+                Logout
+                <i class="fa-solid fa-right-from-bracket ml-2"></i>
+            </button>
+        </form>
+    </div>
 </aside>
