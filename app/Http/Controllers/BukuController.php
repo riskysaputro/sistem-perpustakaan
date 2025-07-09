@@ -65,7 +65,7 @@ class BukuController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Buku $buku)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'judul' => 'required',
@@ -77,7 +77,8 @@ class BukuController extends Controller
             'id_kategori' => 'required|exists:kategori_bukus,id',
         ]);
 
-        $buku->update($request->all());
+         $buku = Buku::findOrFail($id);
+        $buku->update($request->only('judul','pengarang','penerbit','tahun','isbn','jmlh_halaman','id_kategori'));
 
         return redirect()->route('buku.index')->with('success', 'Data buku diperbarui');
     }
@@ -85,8 +86,9 @@ class BukuController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Buku $buku)
+    public function destroy($id)
     {
+        $buku = Buku::findOrFail($id);
         $buku->delete();
         return redirect()->route('buku.index')->with('success', 'Buku dihapus');
     }

@@ -61,10 +61,8 @@ class AnggotaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        $anggota = Anggota::findOrFail($id);
-
         $request->validate([
             'nama' => 'required|string|max:255',
             'alamat' => 'required|string',
@@ -73,8 +71,9 @@ class AnggotaController extends Controller
             'tgl_lahir' => 'required|date',
             'tgl_daftar' => 'required|date',
         ]);
-    $anggota->update($request->all());
-        return redirect()->route('anggota.index')->with('success', 'Data anggota diperbarui');
+        $anggota = Anggota::findOrFail($id);
+        $anggota->update($request->only( 'nama', 'alamat', 'no_hp', 'email', 'tgl_lahir', 'tgl_daftar'));
+        return redirect()->back()->with('success', 'Data anggota diperbarui');
     }
 
     /**

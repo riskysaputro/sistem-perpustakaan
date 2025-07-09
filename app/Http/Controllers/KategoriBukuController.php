@@ -41,21 +41,4 @@ public function destroy($id)
 
     return redirect(route('kategori.index'))->with('success', 'Kategori berhasil dihapus');
 }
-
-
-    // public function update(Request $request, KategoriBuku $kategoriBuku)
-    // {
-    //     $request->validate([
-    //         'kategori' => 'required|string|max:100'
-    //     ]);
-
-    //     $kategoriBuku->update($request->only('kategori'));
-    //     return redirect(route('kategori.index'))->with('success', 'Kategori berhasil diperbarui');
-    // }
-
-    // public function destroy(KategoriBuku $kategoriBuku)
-    // {
-    //     $kategoriBuku->delete();
-    //     return redirect(route('kategori.index'))->with('success', 'Kategori berhasil dihapus');
-    // }
 }

@@ -8,7 +8,7 @@
 
         <button @click="showAdd = true" class="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Tambah
             Anggota</button>
-            
+
         {{-- Partial Notifkasi untuk input berhasil --}}
         @include('partials.notifikasi')
 
@@ -38,7 +38,7 @@
                             <td class="px-6 py-2">{{ $anggota->tgl_daftar }}</td>
                             <td class="px-6 py-2 flex gap-2">
                                 <button @click="selected = {{ $anggota }}; showEdit = true"
-                                    class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">
+                                    class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
                                     Edit
                                 </button>
                                 <button @click="selected = {{ $anggota }}; showDelete = true"
@@ -85,9 +85,9 @@
         <div x-show="showEdit" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
             <div class="bg-white p-6 rounded shadow w-full max-w-lg">
                 <h2 class="text-xl mb-4 font-semibold">Edit Anggota</h2>
-                <form method="POST" :action="`/anggota/${selected.id}`">
+                <form method="POST" :action="`/kelola-anggota/update/${selected.id}`">
                     @csrf
-                    @method('PUT')
+                    @method('PATCH')
                     <div class="grid grid-cols-2 gap-4">
                         <input type="text" name="nama" x-model="selected.nama" class="border p-2 rounded w-full">
                         <input type="text" name="alamat" x-model="selected.alamat" class="border p-2 rounded w-full">
@@ -111,7 +111,7 @@
         <div x-show="showDelete" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
             <div class="bg-white p-6 rounded shadow w-full max-w-md text-center">
                 <p class="mb-4 text-lg">Yakin ingin menghapus <strong x-text="selected.nama"></strong>?</p>
-                <form :action="`/anggota/${selected.id}`" method="POST" class="flex justify-center gap-4">
+                <form :action="`/kelola-anggota/delete/${selected.id}`" method="POST" class="flex justify-center gap-4">
                     @csrf
                     @method('DELETE')
                     <button type="button" @click="showDelete = false"

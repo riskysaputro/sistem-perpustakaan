@@ -13,7 +13,7 @@
             <table class="w-full divide-y divide-gray-200">
                 <thead class="bg-gray-100 text-left text-xs font-semibold text-gray-500 uppercase">
                     <tr>
-                        <th class="px-4 py-2">#</th>
+                        <th class="px-4 py-2">No</th>
                         <th class="px-4 py-2">Kategori</th>
                         <th class="px-4 py-2">Aksi</th>
                     </tr>
@@ -25,11 +25,11 @@
                             <td class="px-4 py-2">{{ $k->kategori }}</td>
                             <td class="px-4 py-2 space-x-2">
                                 <button @click="selected = {{ $k }}; showEdit = true"
-                                    class="text-yellow-600 hover:underline">Edit</button>
+                                    class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Edit</button>
                                 <form action="{{ route('kategori.destroy', $k->id) }}" method="POST" class="inline"
                                     onsubmit="return confirm('Yakin hapus kategori ini?')">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline">Hapus</button>
+                                    <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Hapus</button>
                                 </form>
                             </td>
                         </tr>

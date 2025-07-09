@@ -41,9 +41,9 @@ class PeminjamanController extends Controller
         return redirect()->route('peminjaman.index')->with('success', 'Peminjaman berhasil ditambahkan');
     }
 
-    public function destroy($id)
-    {
-        Peminjaman::destroy($id);
+    public function destroy($id)    {
+        $peminjaman = Peminjaman::findOrFail($id);
+         $peminjaman->delete();
         return redirect()->back()->with('success', 'Data peminjaman dihapus');
     }
 

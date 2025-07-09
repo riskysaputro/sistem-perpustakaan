@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anggota;
 use App\Models\Buku;
+use App\Models\KategoriBuku;
+use App\Models\Peminjaman;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class DashboardControlller extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $jumlah_buku = Buku::all()->count();
-        return view('Admin/dashboard',compact('jumlah_buku'));
+        $jumlahAnggota = Anggota::count();
+        $jumlahBuku = Buku::count();
+        $jumlahKategori = KategoriBuku::count();
+        $jumlahPinjaman = Peminjaman::count();
+        return view('Admin/Dashboard',compact('jumlahAnggota','jumlahBuku','jumlahKategori','jumlahPinjaman'));
     }
 
     /**

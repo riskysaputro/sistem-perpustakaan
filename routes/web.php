@@ -2,16 +2,14 @@
 
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DendaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KategoriBukuController;
 use App\Http\Controllers\PeminjamanController;
 use Illuminate\Support\Facades\Route;
 
-// Dashboard (home page)
-Route::get('/', function () {
-    return view('Admin.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 // Profile (default Laravel Breeze/Fortify route group)
 Route::middleware('auth')->group(function () {
@@ -35,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('buku')->name('buku.')->group(function () {
         Route::get('/', [BukuController::class, 'index'])->name('index');
         Route::post('/', [BukuController::class, 'store'])->name('store');
+        Route::patch('/update/{id}', [BukuController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [BukuController::class, 'destroy'])->name('destroy');
     });
 
     // Route Kategori Buku
@@ -52,10 +52,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [PeminjamanController::class, 'create'])->name('create');
         Route::get('/{id}/edit', [PeminjamanController::class, 'edit'])->name('edit');
         Route::patch('/{id}', [PeminjamanController::class, 'update'])->name('update');
-        Route::patch('/', [PeminjamanController::class, 'update'])->name('update');
-        Route::delete('/', [PeminjamanController::class, 'destroy'])->name('destroy');
+        Route::patch('/update/{id}', [PeminjamanController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [PeminjamanController::class, 'destroy'])->name('destroy');
+
+        // Route Buat Cetak PDF
         Route::get('/{id}/edit', [PeminjamanController::class, 'edit'])->name('edit');
-        Route::patch('/{id}', [PeminjamanController::class, 'update'])->name('update');
         Route::get('/export/pdf', [PeminjamanController::class, 'exportPdf'])->name('export.pdf');
     });
 
@@ -63,9 +64,10 @@ Route::middleware('auth')->group(function () {
     Route::prefix('denda')->name('denda.')->group(function () {
         Route::get('/', [DendaController::class, 'index'])->name('index');
         Route::post('/', [DendaController::class, 'store'])->name('store');
+        Route::patch('/{id}', [DendaController::class, 'update'])->name('update');
+        Route::delete('/{id}', [DendaController::class, 'destroy'])->name('destroy');
+        });
     });
-
-});
 
 Route::fallback(function () {
     return redirect()->route('dashboard');
