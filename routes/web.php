@@ -8,47 +8,67 @@ use App\Http\Controllers\KategoriBukuController;
 use App\Http\Controllers\PeminjamanController;
 use Illuminate\Support\Facades\Route;
 
-
-
+// Dashboard (home page)
 Route::get('/', function () {
-    return view('Admin/dashboard');
+    return view('Admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Profile (default Laravel Breeze/Fortify route group)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// App routes
 Route::middleware('auth')->group(function () {
+
     // Route Anggota
-    Route::get('/kelola-anggota', action: [AnggotaController::class, 'index'])->name('anggota.index');
-    Route::post('/kelola-anggota', action: [AnggotaController::class, 'store'])->name('anggota.store');
+    Route::prefix('kelola-anggota')->name('anggota.')->group(function () {
+        Route::get('/', [AnggotaController::class, 'index'])->name('index');
+        Route::post('/', [AnggotaController::class, 'store'])->name('store');
+        Route::patch('/update/{id}', [AnggotaController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [AnggotaController::class, 'destroy'])->name('destroy');
+    });
 
     // Route Buku
-     Route::get('/buku', action: [BukuController::class, 'index'])->name('buku.index');
-    Route::post('/buku', action: [BukuController::class, 'store'])->name('buku.store');
+    Route::prefix('buku')->name('buku.')->group(function () {
+        Route::get('/', [BukuController::class, 'index'])->name('index');
+        Route::post('/', [BukuController::class, 'store'])->name('store');
+    });
 
-    // Route Kategori
-     Route::get('/kategori', action: [KategoriBukuController::class, 'index'])->name('kategori.index');
-    Route::post('/kategori', action: [KategoriBukuController::class, 'store'])->name('kategori.store');
-    Route::delete('/kategori/{id}', action: [KategoriBukuController::class, 'destroy'])->name('kategori.destroy');
-    Route::patch('/kategori/{id}', action: [KategoriBukuController::class, 'update'])->name('kategori.update');
+    // Route Kategori Buku
+    Route::prefix('kategori')->name('kategori.')->group(function () {
+        Route::get('/', [KategoriBukuController::class, 'index'])->name('index');
+        Route::post('/', [KategoriBukuController::class, 'store'])->name('store');
+        Route::patch('/{id}', [KategoriBukuController::class, 'update'])->name('update');
+        Route::delete('/{id}', [KategoriBukuController::class, 'destroy'])->name('destroy');
+    });
 
-    // Route Pemijaman
-     Route::get('/peminjaman', action: [PeminjamanController::class, 'index'])->name('peminjaman.index');
-    Route::post('/peminjaman', action: [PeminjamanController::class, 'store'])->name('peminjaman.store');
+    // Route Peminjaman
+    Route::prefix('peminjaman')->name('peminjaman.')->group(function () {
+        Route::get('/', [PeminjamanController::class, 'index'])->name('index');
+        Route::post('/', [PeminjamanController::class, 'store'])->name('store');
+        Route::get('/create', [PeminjamanController::class, 'create'])->name('create');
+        Route::get('/{id}/edit', [PeminjamanController::class, 'edit'])->name('edit');
+        Route::patch('/{id}', [PeminjamanController::class, 'update'])->name('update');
+        Route::patch('/', [PeminjamanController::class, 'update'])->name('update');
+        Route::delete('/', [PeminjamanController::class, 'destroy'])->name('destroy');
+        Route::get('/{id}/edit', [PeminjamanController::class, 'edit'])->name('edit');
+        Route::patch('/{id}', [PeminjamanController::class, 'update'])->name('update');
+        Route::get('/export/pdf', [PeminjamanController::class, 'exportPdf'])->name('export.pdf');
+    });
 
-    // Route Kategori
-     Route::get('/denda', action: [DendaController::class, 'index'])->name('denda.index');
-    Route::post('/denda', action: [DendaController::class, 'store'])->name('denda.store');
-
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-Route::resource('peminjaman', PeminjamanController::class)->except(['edit', 'update', 'show']);
-Route::get('/peminjaman/export/pdf', [PeminjamanController::class, 'exportPdf'])->name('peminjaman.export.pdf');
+    // Route Denda
+    Route::prefix('denda')->name('denda.')->group(function () {
+        Route::get('/', [DendaController::class, 'index'])->name('index');
+        Route::post('/', [DendaController::class, 'store'])->name('store');
+    });
 
 });
+
+Route::fallback(function () {
+    return redirect()->route('dashboard');
+});
+
 require __DIR__.'/auth.php';

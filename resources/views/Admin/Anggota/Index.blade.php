@@ -8,6 +8,9 @@
 
         <button @click="showAdd = true" class="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Tambah
             Anggota</button>
+            
+        {{-- Partial Notifkasi untuk input berhasil --}}
+        @include('partials.notifikasi')
 
         <div class="overflow-x-auto bg-white rounded shadow p-4">
             <table class="min-w-full divide-y divide-gray-200">

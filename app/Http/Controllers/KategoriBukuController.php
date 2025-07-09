@@ -22,20 +22,40 @@ class KategoriBukuController extends Controller
         KategoriBuku::create($request->only('kategori'));
         return redirect()->back()->with('success', 'Kategori berhasil ditambahkan');
     }
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'kategori' => 'required|string|max:100'
+    ]);
 
-    public function update(Request $request, KategoriBuku $kategoriBuku)
-    {
-        $request->validate([
-            'kategori' => 'required|string|max:100'
-        ]);
+    $kategoriBuku = KategoriBuku::findOrFail($id);
+    $kategoriBuku->update($request->only('kategori'));
 
-        $kategoriBuku->update($request->only('kategori'));
-        return redirect()->back()->with('success', 'Kategori berhasil diperbarui');
-    }
+    return redirect(route('kategori.index'))->with('success', 'Kategori berhasil diperbarui');
+}
 
-    public function destroy(KategoriBuku $kategoriBuku)
-    {
-        $kategoriBuku->delete();
-        return redirect()->back()->with('success', 'Kategori berhasil dihapus');
-    }
+public function destroy($id)
+{
+    $kategoriBuku = KategoriBuku::findOrFail($id);
+    $kategoriBuku->delete();
+
+    return redirect(route('kategori.index'))->with('success', 'Kategori berhasil dihapus');
+}
+
+
+    // public function update(Request $request, KategoriBuku $kategoriBuku)
+    // {
+    //     $request->validate([
+    //         'kategori' => 'required|string|max:100'
+    //     ]);
+
+    //     $kategoriBuku->update($request->only('kategori'));
+    //     return redirect(route('kategori.index'))->with('success', 'Kategori berhasil diperbarui');
+    // }
+
+    // public function destroy(KategoriBuku $kategoriBuku)
+    // {
+    //     $kategoriBuku->delete();
+    //     return redirect(route('kategori.index'))->with('success', 'Kategori berhasil dihapus');
+    // }
 }

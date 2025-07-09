@@ -37,6 +37,7 @@ class MasterSeeder extends Seeder
             'pengarang' => 'Ahmad Programmer',
             'penerbit' => 'Gramedia',
             'tahun' => '2024',
+            'tgl_input' => now(),
             'isbn' => '9786021234567',
             'jmlh_halaman' => 300,
             'id_kategori' => $kategori->id,
@@ -51,7 +52,7 @@ class MasterSeeder extends Seeder
         $peminjaman = Peminjaman::create([
             'tgl_pinjam' => now(),
             'lama_pinjam' => 7,
-            'nominal_denda' => 0,
+            // 'nominal_denda' => 0,
             'id_anggota' => $anggota->id,
             'id_denda' => $denda->id,
             'id_user' => $user->id,

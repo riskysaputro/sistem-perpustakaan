@@ -19,6 +19,7 @@
             <label class="block mb-1">User</label>
             <input type="number" name="id_user" value="{{ auth()->id() }}" readonly class="w-full border p-2 rounded bg-gray-100">
         </div>
+        
 
         <div class="mb-4">
             <label class="block mb-1">Tanggal Pinjam</label>

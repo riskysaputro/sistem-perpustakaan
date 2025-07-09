@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_anggota')->constrained('anggotas')->onDelete('cascade');
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            $table->date('tgl_pinjam');
+            $table->integer('lama_pinjam');
+            $table->foreignId('id_denda')->nullable()->constrained('denda')->onDelete('set null');
             $table->timestamps();
         });
     }

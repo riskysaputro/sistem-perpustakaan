@@ -10,8 +10,8 @@
                 class="bg-red-600 text-white px-4 py-2 rounded">Export
                 PDF</a>
         </div>
-
-
+        {{-- notifikasi berhasil --}}
+        @include('partials.notifikasi')
 
         <div class="bg-white shadow rounded p-4">
             <table class="w-full table-auto">
